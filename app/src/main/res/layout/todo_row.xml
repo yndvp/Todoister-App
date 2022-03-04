@@ -14,7 +14,8 @@
         android:layout_marginStart="8dp"
         android:padding="@dimen/dimen_0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/todo_row_todo"
