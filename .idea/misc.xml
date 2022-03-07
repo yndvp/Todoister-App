@@ -8,8 +8,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/yunna/AndroidStudioProjects/Todoister/app/src/main/res/layout/activity_about.xml" value="0.2" />
         <entry key="..\:/Users/yunna/AndroidStudioProjects/Todoister/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/yunna/AndroidStudioProjects/Todoister/app/src/main/res/layout/todo_row.xml" value="0.4" />
+        <entry key="..\:/Users/yunna/AndroidStudioProjects/Todoister/app/src/main/res/layout/bottom_sheet.xml" value="0.1" />
+        <entry key="..\:/Users/yunna/AndroidStudioProjects/Todoister/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.1" />
+        <entry key="..\:/Users/yunna/AndroidStudioProjects/Todoister/app/src/main/res/layout/todo_row.xml" value="0.2" />
         <entry key="..\:/Users/yunna/Downloads/Todoister/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.10277777777777777" />
         <entry key="..\:/Users/yunna/Downloads/Todoister/app/src/main/res/layout/activity_about.xml" value="0.264" />
         <entry key="..\:/Users/yunna/Downloads/Todoister/app/src/main/res/layout/activity_main.xml" value="0.2" />
