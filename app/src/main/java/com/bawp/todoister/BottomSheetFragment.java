@@ -45,6 +45,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     Calendar calendar = Calendar.getInstance();
     private SharedViewModel sharedViewModel;
     private boolean isEdit;
+    private Priority priority;
 
     public BottomSheetFragment(){
 
@@ -111,12 +112,35 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
             }
         });
 
+        priorityButton.setOnClickListener(view1 -> {
+            Utils.hideSoftKeyboard(view1);
+            priorityRadioGroup.setVisibility(
+                    priorityRadioGroup.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+            priorityRadioGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+                if(priorityRadioGroup.getVisibility() == View.VISIBLE) {
+                    selectedButtonId = checkedId;
+                    selectedRadioButton = view.findViewById(selectedButtonId);
+                    if(selectedRadioButton.getId() == R.id.radioButton_high) {
+                        priority = Priority.HIGH;
+                    } else if(selectedRadioButton.getId() == R.id.radioButton_med) {
+                        priority = Priority.MEDIUM;
+                    } else if(selectedRadioButton.getId() == R.id.radioButton_low) {
+                        priority = Priority.LOW;
+                    } else {
+                        priority = Priority.LOW;
+                    }
+                } else {
+                    priority = Priority.LOW;
+                }
+            });
+        });
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String task = enterTodo.getText().toString().trim();
-                if(!TextUtils.isEmpty(task) && dueDate != null) {
-                    Task myTask = new Task(task, Priority.HIGH,
+                if(!TextUtils.isEmpty(task) && dueDate != null && priority != null) {
+                    Task myTask = new Task(task, priority,
                             dueDate, Calendar.getInstance().getTime(),
                             false);
 
@@ -124,7 +148,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                         Task updatedTask = sharedViewModel.getSelectedItem().getValue();
                         updatedTask.setTask(task);
                         updatedTask.setDateCreated(Calendar.getInstance().getTime());
-                        updatedTask.setPriority(Priority.HIGH);
+                        updatedTask.setPriority(priority);
                         updatedTask.setDueDate(dueDate);
 
                         TaskViewModel.update(updatedTask);
