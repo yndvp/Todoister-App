@@ -42,6 +42,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
     private Date dueDate;
     Calendar calendar = Calendar.getInstance();
     private SharedViewModel sharedViewModel;
+    private boolean isEdit;
 
     public BottomSheetFragment(){
 
@@ -72,15 +73,22 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(sharedViewModel.getSelectedItem().getValue() != null) {
+            isEdit = sharedViewModel.getIsEdit();
+
+            Task task = sharedViewModel.getSelectedItem().getValue();
+            enterTodo.setText(task.getTask());
+        }
+    }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         sharedViewModel = new ViewModelProvider(requireActivity())
                 .get(SharedViewModel.class);
-
-        if(sharedViewModel.getSelectedItem().getValue() != null) {
-            Task task = sharedViewModel.getSelectedItem().getValue();
-
-        }
 
         calenderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +116,19 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                     Task myTask = new Task(task, Priority.HIGH,
                             dueDate, Calendar.getInstance().getTime(),
                             false);
-                    TaskViewModel.insert(myTask);
+
+                    if(isEdit) {
+                        Task updatedTask = sharedViewModel.getSelectedItem().getValue();
+                        updatedTask.setTask(task);
+                        updatedTask.setDateCreated(Calendar.getInstance().getTime());
+                        updatedTask.setPriority(Priority.HIGH);
+                        updatedTask.setDueDate(dueDate);
+
+                        TaskViewModel.update(updatedTask);
+                        sharedViewModel.setIsEdit(false);
+                    } else {
+                        TaskViewModel.insert(myTask);
+                    }
                 }
             }
         });
