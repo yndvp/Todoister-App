@@ -2,6 +2,7 @@ package com.bawp.todoister;
 
 import android.os.Bundle;
 
+import com.bawp.todoister.adapter.OnTodoClickListener;
 import com.bawp.todoister.adapter.RecyclerViewAdapter;
 import com.bawp.todoister.model.Priority;
 import com.bawp.todoister.model.Task;
@@ -27,7 +28,7 @@ import android.view.MenuItem;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnTodoClickListener {
     private TaskViewModel taskViewModel;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
@@ -56,15 +57,12 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.getApplication())
                 .create(TaskViewModel.class);
 
-        taskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(List<Task> tasks) {
-//                for(Task task : tasks) {
+        taskViewModel.getAllTasks().observe(this, tasks -> {
+//            for(Task task : tasks) {
 //                    Log.d("retrieve", "onCreate: " + task.getTaskId());
 //                }
-                recyclerViewAdapter = new RecyclerViewAdapter(tasks);
+                recyclerViewAdapter = new RecyclerViewAdapter(tasks, this);
                 recyclerView.setAdapter(recyclerViewAdapter);
-            }
         });
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -103,5 +101,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTodoClick(int adapterPosition, Task task) {
+
     }
 }
