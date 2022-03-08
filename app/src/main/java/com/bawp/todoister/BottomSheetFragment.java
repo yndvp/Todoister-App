@@ -16,8 +16,10 @@ import com.bawp.todoister.model.Priority;
 import com.bawp.todoister.model.SharedViewModel;
 import com.bawp.todoister.model.Task;
 import com.bawp.todoister.model.TaskViewModel;
+import com.bawp.todoister.util.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -96,6 +98,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                 calenderGroup.setVisibility(
                         calenderGroup.getVisibility() == View.GONE ?
                         View.VISIBLE : View.GONE);
+                Utils.hideSoftKeyboard(view);
             }
         });
 
@@ -129,6 +132,14 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
                     } else {
                         TaskViewModel.insert(myTask);
                     }
+                    enterTodo.setText("");
+
+                    if(BottomSheetFragment.this.isVisible()) {
+                        BottomSheetFragment.this.dismiss();
+                    }
+                } else {
+                    Snackbar.make(saveButton, R.string.empty_field, Snackbar.LENGTH_LONG)
+                            .show();
                 }
             }
         });
