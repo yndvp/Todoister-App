@@ -140,7 +140,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#C91517"
-            android:text="@string/radio_high" />
+            android:text="@string/radio_high"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/radioButton_med"
